@@ -7,6 +7,60 @@ using namespace std;
 #define p 5 //p is five minutes
 int queue[N];
 
+class Node{
+public:
+    unsigned short int QueueNo;
+    unsigned int People;
+    Node* next;
+};
+
+class QueueManager{
+    Node* head;
+public:
+    QueueManager();
+};
+
+//QueueManager::QueueManager (){
+//    int range=0;
+//    srand(time(0));
+//    for ( int i = 1 ; i < N + 1 ; i++ ){
+//        Node* t = new Node;
+//        t->QueueNo = i;
+//
+//    }
+//}
+
+Node* createList(Node* head, int data, int i){
+    
+    Node* temp=NULL;
+    temp=head;
+    Node* newP=new Node;
+    newP->People=data;
+    newP->QueueNo=i+1;
+    if(data<=head->People){
+        newP->next=head;
+        head=newP;
+        return head;
+    }
+    else
+    {
+        while(temp->next!=NULL && temp->next->People<=data){
+            temp=temp->next;
+        }
+        if(temp->next==NULL){
+            temp->next=newP;
+            newP->next=NULL;
+        }
+        else
+        {
+            newP->next=temp->next;
+            temp->next=newP;
+        }
+        return head;
+    }
+}
+
+
 void AssignRand(){
     int range=0;
     srand(time(0));
@@ -20,6 +74,23 @@ void AssignRand(){
         stat = rand() % ( (M/4 + 1) - range );
         queue[i] += stat;
         range += stat;
+    }
+    
+    Node* head=NULL;
+    Node* temp= new Node;
+    temp->QueueNo=1;
+    temp->People=queue[0];
+    temp->next=NULL;
+    head=temp;
+    
+    for(int i=1;i<N;i++){
+        
+        head=createList(head, queue[i], i);
+    }
+    Node* temp3=head;
+    while(temp3){
+        cout<< temp3->QueueNo << " " << temp3->People<< endl;
+        temp3=temp3->next;
     }
 }
 
