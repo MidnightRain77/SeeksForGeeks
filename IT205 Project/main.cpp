@@ -1,13 +1,15 @@
 #include <iostream>
 #include <cstdlib>
+#include <ctime>
+using namespace std;
 #define M 10000
 #define N 30
 #define p 5 //p is five minutes
 int queue[N];
-using namespace std;
 
 void AssignRand(){
     int range=0;
+    srand(time(0));
     for ( int i = 0 ; i < N ; i++ ){
         queue[i] = rand() % ( (M/4 + 1) - range );
         range += queue[i];
@@ -31,7 +33,7 @@ void entryQueueManager(){
     cout<<"Following queue numbers have the least waiting time as of now:"<<endl;
     for ( int i = 0 ; i < N ; i++ ){
         if ( min == queue[i] )
-            cout<<i++<<" ";
+            cout<<i+1<<" ";
     }
     cout<<endl;
 }
@@ -45,42 +47,43 @@ int main() {
         cout<<"3. You want to change your current queue and need the help of entry manager."<<endl;
         cout<<"4. You want to change your current queue and already know which queue to shift to."<<endl;
         cout<<"5. Exit."<<endl;
-        int option, q;
+        char option;
+        int q, o;
         cin>>option;
         switch(option){
-            case 1:
+            case '1':
                 cout<<"Enter the queue number you want to join: ";
                 cin>>q;
                 queue[q-1]++;
                 cout<<"You are now in queue no. "<<q<<endl;
                 break;
-            case 2:
+            case '2':
                 entryQueueManager();
                 cout<<"Enter the queue number you want to join: ";
                 cin>>q;
                 queue[q-1]++;
                 cout<<"You are now in queue no. "<<q<<endl;
                 break;
-            case 3:
+            case '3':
                 cout<<"Enter the queue number you're currently in: ";
-                cin>>option;
+                cin>>o;
                 entryQueueManager();
                 cout<<"Enter the queue number you want to join: ";
                 cin>>q;
                 queue[q-1]++;
-                queue[option-1]--;
+                queue[o-1]--;
                 cout<<"You are now in queue no. "<<q<<endl;
                 break;
-            case 4:
+            case '4':
                 cout<<"Enter the queue number you're currently in: ";
-                cin>>option;
+                cin>>o;
                 cout<<"Enter the queue number you want to join: ";
                 cin>>q;
                 queue[q-1]++;
-                queue[option-1]--;
+                queue[o-1]--;
                 cout<<"You are now in queue no. "<<q<<endl;
                 break;
-            case 5:
+            case '5':
                 exit(0);
             default:
                 cout<<"Invalid Option!"<<endl;
