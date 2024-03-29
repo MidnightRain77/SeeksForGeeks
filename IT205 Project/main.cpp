@@ -2,10 +2,9 @@
 #include <cstdlib>
 #include <ctime>
 using namespace std;
-#define M 1000
-#define N 10
+#define M 100
+#define N 20
 #define p 5 //p is five minutes
-
 class Node{
 public:
     unsigned short int QueueNo;
@@ -19,12 +18,15 @@ class QueueManager{
     Node* flag = NULL;
 public:
     QueueManager();
-    Node* createList(Node* head, int data, int i);
+    Node* createList(Node* var, int data, int i);
     void AssignRand();
     void display();
+    void EntryManager(Node* var);
+    void findFlag();
+    Node* getHead();
+    void Suggestions();
 };
 
-//Constructor to assign random values and sort them according the random values
 QueueManager::QueueManager (){
     AssignRand();
     Node* head=NULL;
@@ -38,9 +40,9 @@ QueueManager::QueueManager (){
         head=createList(head, queue[i], i);
     }
     this->head = head;
+    findFlag();
 }
 
-//Function for creating nodes and sorting
 Node* QueueManager::createList(Node* head, int data, int i){
     
     Node* temp=NULL;
@@ -69,9 +71,13 @@ Node* QueueManager::createList(Node* head, int data, int i){
     }
 }
 
+Node* QueueManager::getHead(){
+    return head;
+}
+
 void QueueManager::AssignRand(){
+    srand((unsigned int)(time(0)));
     int range=0;
-    srand((unsigned int)time(0));
     for ( int i = 0 ; i < N ; i++ ){
         queue[i] = rand() % ( (M/4 + 1) - range );
         range += queue[i];
@@ -83,21 +89,90 @@ void QueueManager::AssignRand(){
         queue[i] += stat;
         range += stat;
     }
+    int data=0;
+    for(int i=0;i<N;i++){
+        data+=queue[i];
+    }
+    if(data!=M/2){
+        if(data<M/2){
+            queue[0]+=(M/2-data);
+        }
+        else{
+            queue[0]+=(data-M/2);
+        }
+    }
+}
+
+void QueueManager::findFlag(){
+    flag = head;
+    while(flag && ((flag->People)<(M/N))){
+        flag=flag->next;
+    }
 }
 
 void QueueManager::display(){
     Node* temp = head;
     while ( temp ){
-        cout<< temp->People << " ";
+        cout<< temp->QueueNo<<"->"<< temp->People <<"  ";
         temp=temp->next;
     }
     cout<<endl;
 }
 
-int main() {
+void QueueManager::EntryManager(Node* temp){
+    while ( temp->People == temp->next->People )
+        temp = temp->next;
     
+    unsigned int limit = temp->next->People;
+    
+    while (flag && flag->People - M/N && temp->People!=limit ){
+        flag->People--;
+        temp->People++;
+    }
+    if (flag && temp->People!=limit ){
+        if ( flag->next ){
+            flag = flag->next;
+            EntryManager(temp);
+        }
+        else{
+            return;
+        }
+    }
+    else if (flag && flag->People - M/N){
+        if ( flag ){
+            EntryManager(head);
+        }
+        else{
+            return;
+        }
+    }
+    else if ( flag && flag->next ){
+        flag = flag->next;
+        EntryManager(head);
+    }
+}
+
+void QueueManager::Suggestions(){
+    Node* temp = head;
+    cout<<"Least waiting time is: "<< p*head->People <<" minutes"<<endl;
+    cout<<"Following queue numbers have the least waiting time as of now:"<<endl;
+    while ( temp->next && temp->People == temp->next->People ){
+        cout<<temp->QueueNo<<" ";
+        temp = temp->next;
+    }
+    
+    if ( temp->next )
+        cout<<temp->QueueNo<<" ";
+    cout<<endl;
+}
+
+int main(){
     QueueManager q;
     q.display();
-        return 0;
+    cout<<endl<<endl;
+    q.EntryManager(q.getHead());
+    q.display();
+    cout<<endl<<endl;
+    return 0;
 }
 
