@@ -2,8 +2,8 @@
 #include <cstdlib>
 #include <ctime>
 using namespace std;
-#define M 100
-#define N 20
+#define M 10000
+#define N 100
 #define p 5 //p is five minutes
 
 //Class to store data of each queue
@@ -135,10 +135,11 @@ void QueueManager::display(){
 //Function to shift the randomly assigned people, recursively,
 //to minimize total entry time
 void QueueManager::EntryManager(Node* temp){
-    while ( temp->People == temp->next->People )
+    while ( temp->next && temp->People == temp->next->People )
         temp = temp->next;
     
-    unsigned int limit = temp->next->People;
+    unsigned int limit;
+    limit = temp->next?temp->next->People:temp->People;
     
     while (flag && flag->People - M/N && temp->People!=limit ){
         flag->People--;
@@ -207,6 +208,8 @@ void QueueManager::Suggestions(){
     
     if ( temp->next )
         cout<<temp->QueueNo<<" ";
+    else if ( temp )
+        cout<<temp->QueueNo<<" ";
     cout<<endl;
 }
 
@@ -214,7 +217,7 @@ void QueueManager::Suggestions(){
 void QueueManager::enqueuePeople(unsigned short int Q){
     Node* temp = head;
     Node* tail = NULL;
-    while ( temp->QueueNo != Q ){
+    while ( temp && temp->QueueNo != Q ){
         tail = temp;
         temp = temp->next;
     }
@@ -242,9 +245,17 @@ void QueueManager::EntryQueueManager(){
     for(int i=0;i<M/2;i++){
         cout<<"Suggestions by entry queue manager:"<<endl;
         Suggestions();
-        cout<<"Enter the queue number you want to join: ";
-        cin>>q;
-        enqueuePeople(q);
+        while(1){
+            cout<<"Enter the queue number you want to join(1 to "<<N<<"): ";
+            cin>>q;
+            if(q>0 && q<N+1){
+                enqueuePeople(q);
+                break;
+            }
+            else{
+                cout<<"Invalid queue number, enter correctly again!"<<endl;
+            }
+        }
         cout<<"You are now in queue no. "<< q <<endl;
         cout<<"Choose"<<endl;
         cout<<"1. If you want to switch from your current queue"<<endl;
@@ -253,9 +264,17 @@ void QueueManager::EntryQueueManager(){
         switch(choice){
             case 1:
                 Suggestions();
-                cout<<"Enter the queue number you want to switch to: ";
-                cin>>q2;
-                enqueuePeople(q2);
+                while(1){
+                    cout<<"Enter the queue number you want to join(1 to "<<N<<"): ";
+                    cin>>q;
+                    if(q>0 && q<N+1){
+                        enqueuePeople(q);
+                        break;
+                    }
+                    else{
+                        cout<<"Invalid queue number, enter correctly again!"<<endl;
+                    }
+                }
                 dequeuePeople(q);
                 cout<<"You are now in queue no. "<< q2 <<endl;
                 break;
@@ -264,7 +283,11 @@ void QueueManager::EntryQueueManager(){
             default:
                 cout<<"Invalid choice! So by default option 2 is selected..."<<endl;
         }
-        cout<<"Moving onto the next person..."<<endl<<endl;
+        if ( i == M/2 - 1 )
+            cout<<"The stadium is full..."<<endl<<endl;
+        else{
+            cout<<"Moving onto the next person..."<<endl<<endl;
+        }
     }
 }
 
