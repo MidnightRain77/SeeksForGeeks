@@ -34,7 +34,6 @@ public:
     void sort(Node* temp, Node* tail);
 };
 
-//Constructor to assign random values and sort them according the random values
 QueueManager::QueueManager (){
     AssignRand();
     Node* head=NULL;
@@ -51,7 +50,6 @@ QueueManager::QueueManager (){
     findFlag();
 }
 
-//Function for creating nodes and sorting
 Node* QueueManager::createList(Node* head, int data, int i){
     
     Node* temp=NULL;
@@ -270,6 +268,8 @@ void QueueManager::EntryQueueManager(){
 
 int main(){
     QueueManager q;
+    q.display();
+    cout<<endl<<endl;
     q.EntryManager(q.getHead());
     q.EntryQueueManager();
     return 0;
