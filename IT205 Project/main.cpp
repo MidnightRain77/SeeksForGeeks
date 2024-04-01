@@ -293,6 +293,8 @@ void QueueManager::EntryQueueManager(){
 
 int main(){
     QueueManager q;
+    q.display();
+    cout<<endl<<endl;
     q.EntryManager(q.getHead());
     q.EntryQueueManager();
     return 0;
