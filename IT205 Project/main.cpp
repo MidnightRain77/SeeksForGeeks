@@ -2,8 +2,8 @@
 #include <cstdlib>
 #include <ctime>
 using namespace std;
-#define M 10000
-#define N 100
+#define M 8
+#define N 4
 #define p 5 //p is five minutes
 
 //Class to store data of each queue
@@ -217,7 +217,7 @@ void QueueManager::Suggestions(){
 void QueueManager::enqueuePeople(unsigned short int Q){
     Node* temp = head;
     Node* tail = NULL;
-    while ( temp && temp->QueueNo != Q ){
+    while ( temp->next && temp->QueueNo != Q ){
         tail = temp;
         temp = temp->next;
     }
@@ -229,7 +229,7 @@ void QueueManager::enqueuePeople(unsigned short int Q){
 void QueueManager::dequeuePeople(unsigned short int Q){
     Node* temp = head;
     Node* tail = NULL;
-    while ( temp && temp->QueueNo != Q ){
+    while ( temp->next && temp->QueueNo != Q ){
         tail = temp;
         temp = temp->next;
     }
@@ -245,7 +245,7 @@ void QueueManager::EntryQueueManager(){
     for(int i=0;i<M/2;i++){
         cout<<"Suggestions by entry queue manager:"<<endl;
         Suggestions();
-        while(1){
+        while(true){
             cout<<"Enter the queue number you want to join(1 to "<<N<<"): ";
             cin>>q;
             if(q>0 && q<N+1){
@@ -264,11 +264,11 @@ void QueueManager::EntryQueueManager(){
         switch(choice){
             case 1:
                 Suggestions();
-                while(1){
+                while(true){
                     cout<<"Enter the queue number you want to join(1 to "<<N<<"): ";
-                    cin>>q;
+                    cin>>q2;
                     if(q>0 && q<N+1){
-                        enqueuePeople(q);
+                        enqueuePeople(q2);
                         break;
                     }
                     else{
