@@ -1,21 +1,31 @@
 #include <iostream>
 #include<cstdlib>
+#include <chrono>
+using namespace std::chrono;
 using namespace std;
-#define M 10 //M is number of people that are given entry to the stadium
-#define N 5 //N is the total number of queues
-#define p 5 //p is five minutes
-int queue[N]; //queue[N] is an array which stores the number of people in N queues
-int n;
+const int M = 20; //Capacity of the stadium
+const int N = 5; //Number of entry gates
+const int p = 1; //mins it takes for a single attendee to enter any gate
 
-//random function is used so that inital random assisgnment of M/2 people can be done
-void AssignRand(){
+//Calculate the time passed since the opening of entry gates
+class Stopwatch{
+    time_point <high_resolution_clock> start;
+public:
+    Stopwatch() : start(high_resolution_clock::now()){}
+    
+    long ElapsedMinutes(){
+        return duration_cast<seconds>(high_resolution_clock::now()-start).count();
+    }
+};
+
+//Function to randomly assign M/2 people to the entry gates
+void AssignRand(int queue[]){
     srand((unsigned int)(time(0)));
     int range=0;
     for ( int i = 0 ; i < N ; i++ ){
         queue[i] = rand() % ( (M/4 + 1) - range );
         range += queue[i];
     }
-    //To minimize the number of zeros in random assignment we have used two for loops
     range = 0;
     int stat=0;
     for ( int i = N - 1 ; i > -1 ; i-- ){
@@ -23,7 +33,7 @@ void AssignRand(){
         queue[i] += stat;
         range += stat;
     }
-    //Below code ensures that exactly M/2 poeple are randomly assigned to N queues
+    //Ensuring that exactly M/2 poeple are assigned
     int data=0;
     for(int i=0;i<N;i++){
         data+=queue[i];
@@ -38,8 +48,8 @@ void AssignRand(){
     }
 }
 
-//By distribute function, uniformity will be maintained in all the queues so time for last person to enter the stadium will be reduced, therby minimizing the time for M people to enter the stadium
-void Distribute(){
+//Function to minimize the time for entry of the first M/2 randomly assigned people
+void Distribute(int queue[]){
     int limit = M/N;
     int extra=0;
     for(int i=0;i<N;i++){
@@ -66,9 +76,8 @@ void Distribute(){
     }
 }
 
-//EntryQueueManager suggests people the queue by which they can get into stadium in least time
-void entryQueueManager(){
-    n=0;
+//Function to suggest the least waiting time
+void entryQueueManager(int queue[]){
     int min = queue[0];
     for ( int i = 1 ; i < N ; i++ ){
         if ( queue[i] < min )
@@ -79,19 +88,20 @@ void entryQueueManager(){
     for ( int i = 0 ; i < N ; i++ ){
         if ( min == queue[i] )
             cout<<i+1<<" ";
-        n++;
     }
     cout<<endl;
     cout<<"You can choose from queue number 1 to "<<N<<endl;
 }
 
 int main() {
-    AssignRand();
-    Distribute();
-    int q,choice,q2;
+    int queue[N];
+    AssignRand(queue);
+    Distribute(queue);
+    Stopwatch stat;
+    int q, choice, q2;
     for(int i=0;i<(M/2 + M%2);i++){
         cout<<"Suggestions by entry queue manager:"<<endl;
-        entryQueueManager();
+        entryQueueManager(queue);
         while(1){
             cout<<"Enter the queue number you want to join: ";
             cin>>q;
@@ -110,11 +120,11 @@ int main() {
         cin>>choice;
         switch(choice){
             case 1:
-                if(n==1){
+                if(N==1){
                     cout<<"You don't have choice to switch as we only 1 queue"<<endl;
                 }
                 else{
-                    entryQueueManager();
+                    entryQueueManager(queue);
                     while(1){
                         cout<<"Enter the queue number you want to switch to: ";
                         cin>>q2;
@@ -133,13 +143,15 @@ int main() {
             case 2:
                 break;
             default:
-                cout<<"Invalid choice, so default is that you are satisfied with your current queue"<<endl;
+                cout<<"Invalid choice! So by default option 2 is selected..."<<endl;
         }
-        if(i==(M/2-1)+(M%2))
-            cout<<"Now all persons are arranged in the queues"<<endl;
+        cout<<"Time elapsed: "<<stat.ElapsedMinutes();
+        if(i==(M/2-1)+(M%2)){
+            cout<<"The stadium is full!"<<endl;
+            cout<<"Total time: "<<stat.ElapsedMinutes()<<endl;
+        }
         else
-            cout<<"Now, enter next person"<<endl<<endl;
+            cout<<"Moving onto the next person..."<<endl<<endl;
     }
-    
         return 0;
 }
