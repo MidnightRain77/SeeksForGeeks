@@ -1,6 +1,8 @@
 #include <iostream>
-#include<cstdlib>
+#include <cstdlib>
 #include <chrono>
+#include <thread>
+#include <utility>
 using namespace std::chrono;
 using namespace std;
 const int M = 20; //Capacity of the stadium
@@ -14,9 +16,31 @@ public:
     Stopwatch() : start(high_resolution_clock::now()){}
     
     long ElapsedMinutes(){
-        return duration_cast<seconds>(high_resolution_clock::now()-start).count();
+        return duration_cast<minutes>(high_resolution_clock::now()-start).count();
     }
 };
+
+int countPeepsLeft(int queue[]){
+    int left = 0;
+    for ( int i = 0 ; i < N ; i++ )
+        left += *(queue + i);
+    return left;
+}
+
+//Function to automatically dequeue people into the stadium
+void autodequeue(int* queue){
+    this_thread::sleep_for(minutes(p));
+    if ( countPeepsLeft(queue) ){
+        for ( int i = 0 ; i < N ; i++ ){
+            if ( *(queue + i) ){
+                (*(queue + i))--;
+            }
+        }
+        autodequeue(queue);
+    }
+    else
+        return;
+}
 
 //Function to randomly assign M/2 people to the entry gates
 void AssignRand(int queue[]){
@@ -97,9 +121,15 @@ int main() {
     int queue[N];
     AssignRand(queue);
     Distribute(queue);
+    for ( int i = 0 ; i < N ; i++ ){
+        cout<<queue[i]<<" ";
+    }
+    cout<<endl<<endl;
     Stopwatch stat;
+    thread t(autodequeue, queue);
+    t.detach();
     int q, choice, q2;
-    for(int i=0;i<(M/2 + M%2);i++){
+    for(int i=0;i<( M / 2 + M  % 2 );i++){
         cout<<"Suggestions by entry queue manager:"<<endl;
         entryQueueManager(queue);
         while(1){
@@ -145,13 +175,12 @@ int main() {
             default:
                 cout<<"Invalid choice! So by default option 2 is selected..."<<endl;
         }
-        cout<<"Time elapsed: "<<stat.ElapsedMinutes();
         if(i==(M/2-1)+(M%2)){
             cout<<"The stadium is full!"<<endl;
-            cout<<"Total time: "<<stat.ElapsedMinutes()<<endl;
         }
         else
             cout<<"Moving onto the next person..."<<endl<<endl;
     }
+    cout<<"Total time: "<<stat.ElapsedMinutes()<<endl;
         return 0;
 }
