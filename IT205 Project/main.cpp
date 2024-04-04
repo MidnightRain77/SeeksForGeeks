@@ -3,6 +3,8 @@
 #include <chrono>
 #include <thread>
 #include <utility>
+#include <deque>
+#include <vector>
 using namespace std::chrono;
 using namespace std;
 const int M = 20; //Capacity of the stadium
@@ -27,6 +29,25 @@ int countPeepsLeft(int queue[]){
     return left;
 }
 
+//Returns the hashed value
+int hashFunction(int i){
+    return ( i % (M/8) );
+}
+
+//Initializes the pair
+void createSerialNo ( pair<int, pair<bool, short int>> (&SerialNo)[N] ){
+    for ( int i = 0 ; i < M ; i++ ){
+        SerialNo[i].first = 1000000 + i;
+        SerialNo[i].second.second = 0;
+        if ( !hashFunction(i) ){
+            SerialNo[i].second.first = true;
+        }
+        else{
+            SerialNo[i].second.first = false;
+        }
+    }
+}
+
 //Function to automatically dequeue people into the stadium
 void autodequeue(int* queue){
     this_thread::sleep_for(minutes(p));
@@ -43,58 +64,59 @@ void autodequeue(int* queue){
 }
 
 //Function to randomly assign M/2 people to the entry gates
-void AssignRand(int queue[]){
+void Assign_to_Random_Gate(int* queue, pair<int, pair<bool, short int>> (&SerialNo)[N], deque<int> (&SerialNo_Queue)[N]){
     srand((unsigned int)(time(0)));
-    int range=0;
-    for ( int i = 0 ; i < N ; i++ ){
-        queue[i] = rand() % ( (M/4 + 1) - range );
-        range += queue[i];
-    }
-    range = 0;
-    int stat=0;
-    for ( int i = N - 1 ; i > -1 ; i-- ){
-        stat = rand() % ( (M/4 + 1) - range );
-        queue[i] += stat;
-        range += stat;
-    }
-    //Ensuring that exactly M/2 poeple are assigned
-    int data=0;
-    for(int i=0;i<N;i++){
-        data+=queue[i];
-    }
-    if(data!=M/2){
-        if(data<M/2){
-            queue[0]+=(M/2-data);
-        }
-        else{
-            queue[0]+=(data-M/2);
-        }
+    for ( int i = 0 ; i < M ; i++ ){
+        int gate = rand() % N;
+        queue[gate]++;
+        int serial;
+        do{
+            serial = rand() % M;
+        }while( !SerialNo[serial].second.second );
+        SerialNo_Queue[gate].push_front(SerialNo[serial].first);
+        SerialNo[serial].second.second = 1;
     }
 }
 
 //Function to minimize the time for entry of the first M/2 randomly assigned people
-void Distribute(int queue[]){
+void Distribute(int* queue, deque<int> (&SerialNo_Queue)[N]){
     int limit = M/N;
-    int extra=0;
-    for(int i=0;i<N;i++){
-        if(queue[i]>limit){
-            extra+= (queue[i] - limit);
-            queue[i]=limit;
+    int extra = 0, data, shift;
+    vector <int> reshuff;
+    for ( int i = 0 ; i < N ; i++ ){
+        if ( *(queue + i) > limit ){
+            shift = *(queue + i) - limit;
+            extra += shift;
+            *(queue + i) = limit;
+            while ( shift ){
+                reshuff.push_back(SerialNo_Queue[i].front());
+                SerialNo_Queue[i].pop_front();
+                shift--;
+            }
         }
     }
-    int data;
-    for(int i=0;i<N;i++){
-        if(queue[i]<limit){
-            data=limit-queue[i];
-            if(extra>data){
-                queue[i]+=data;
-                extra-=data;
+    for ( int i = 0 ; i < N ; i++ ){
+        if ( *(queue + i) < limit ){
+            data = limit - *(queue + i);
+            if ( extra > data ){
+                *(queue + i) += data;
+                extra -= data;
+                while ( data ){
+                    SerialNo_Queue[i].push_front(reshuff.back());
+                    reshuff.pop_back();
+                    data--;
+                }
             }
             else{
-                queue[i]+=extra;
+                *(queue + i) += extra;
+                while ( extra ){
+                    SerialNo_Queue[i].push_front(reshuff.back());
+                    reshuff.pop_back();
+                    extra--;
+                }
                 break;
             }
-            if(extra<=0)
+            if( extra <= 0 )
                 break;
         }
     }
@@ -118,9 +140,12 @@ void entryQueueManager(int queue[]){
 }
 
 int main() {
-    int queue[N];
-    AssignRand(queue);
-    Distribute(queue);
+    int queue[N], x = 0;
+    pair<int, pair<bool, short int>> SerialNo[N];
+    deque<int> SerialNo_Queue[N];
+    createSerialNo(SerialNo);
+    Assign_to_Random_Gate(queue, SerialNo, SerialNo_Queue);
+    Distribute(queue, SerialNo_Queue);
     for ( int i = 0 ; i < N ; i++ ){
         cout<<queue[i]<<" ";
     }
@@ -181,6 +206,12 @@ int main() {
         else
             cout<<"Moving onto the next person..."<<endl<<endl;
     }
+    do{
+        x=0;
+        for(int i=0;i<N;i++){
+            x+=queue[i];
+        }
+    }while(x!=0);
     cout<<"Total time: "<<stat.ElapsedMinutes()<<endl;
         return 0;
 }
