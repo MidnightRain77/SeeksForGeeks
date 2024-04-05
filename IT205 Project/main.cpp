@@ -7,15 +7,15 @@
 #include <vector>
 using namespace std::chrono;
 using namespace std;
-const int M = 20; //Capacity of the stadium
-const int N = 5; //Number of entry gates
+const int M = 1000; //Capacity of the stadium
+const int N = 10; //Number of entry gates
 const int p = 1; //mins it takes for a single attendee to enter any gate
 
 //Calculate the time passed since the opening of entry gates
 class Stopwatch{
     time_point <high_resolution_clock> start;
 public:
-    Stopwatch() : start( high_resolution_clock::now() ){}
+    Stopwatch() : start ( high_resolution_clock::now() ) {}
     
     long ElapsedMinutes(){
         return duration_cast<minutes>( high_resolution_clock::now() - start ).count();
@@ -124,100 +124,105 @@ void Delete ( deque<int> (&Queue)[N], int Gate, int Serial_No ){
 }
 
 //Function to automatically dequeue people into the stadium
-void AutoDequeue ( deque<int> (&Queue)[N], pair<short int, int> (&SerialStat)[M] ){
-    this_thread::sleep_for(minutes(p));
-    if ( CountPeopleLeft ( Queue ) ){
+void AutoDequeue ( deque<int> (&Queue)[N], pair<short int, int> (&SerialStat)[M], int* counter ){
+    while ( CountPeopleLeft ( Queue ) ){
+        this_thread::sleep_for(minutes(p));
         for ( int i = 0 ; i < N ; i++ ){
             if ( Queue[i].size() ){
                 SerialStat[Queue[i].back()].first = 2;
                 Queue[i].pop_back();
             }
         }
-        AutoDequeue( Queue, SerialStat );
     }
-    else
-        return;
 }
 
 int main() {
     pair<short int, int> SerialStat[M];
     deque<int> Queue[N];
+    int sr_num;
+    int queue_num;
+    int counter = 0;
     CreateSerialNo(SerialStat);
     AssignRandomGate(SerialStat, Queue);
     Distribute(Queue);
     Stopwatch stat;
-    thread t(AutoDequeue, std::ref(Queue), std::ref(SerialStat));
+    thread t(AutoDequeue, std::ref(Queue), std::ref(SerialStat), &counter );
     t.detach();
-    int sr_num;
-    int queue_num;
-    int n=0;
     while(true){
-        n+=1;
+        counter += 1;
         while(true){
-            cout << "Enter your serial number: ";
-            cin >> sr_num;
-            sr_num = sr_num - 1000000;
-            cout << endl;
-            if ( sr_num >= 0 && sr_num <= M ){
-                if ( SerialStat[sr_num].first == 0 )
-                {
-                    if ( HashFunction(sr_num) ){
-                        cout << "You have VIP access to the stadium so you will be provided with direct entry" << endl;
-                        SerialStat[sr_num].first = 2;
+            cout << "Welcome to the Entry Queue Management System!" << endl;
+            cout << "Please enter your 7-digit serial number: ";
+            if ( cin >> sr_num ){
+                sr_num -= 1000000;
+                cout << endl;
+                if ( sr_num >= 0 && sr_num < M ){
+                    if ( SerialStat[sr_num].first == 0 ){
+                        if ( HashFunction(sr_num) ){
+                            cout << "Welcome, VIP! You will be directed to our exclusive entry gate." << endl;
+                            SerialStat[sr_num].first = 2;
+                        }
+                        else{
+                            SerialStat[sr_num].first = 1;
+                            cout << "Here are the recommended entry gates based on the current wait time:" << endl;
+                            Suggestion(Queue);
+                            cout << "Please enter your preferred entry gate number: ";
+                            cin >> queue_num;
+                            cout << endl;
+                            while ( queue_num <= 0 || queue_num > N ){
+                                cout << "Oops! Please enter a gate number between 1 and " << N << ": ";
+                                cin >> queue_num;
+                            }
+                            SerialStat[sr_num].second = queue_num - 1;
+                            Queue[queue_num - 1].push_front(sr_num);
+                        }
                     }
-                    else{
-                        SerialStat[sr_num].first = 1;
-                        cout << "Suggestions by entry queue manager:" << endl;
+                    else if ( SerialStat[sr_num].first == 1 ){
+                        cout << "It looks like you're already in a queue. Do you wish to switch to a different gate?" << endl << flush;
+                        cout << "Here are the recommended entry gates based on the current wait time:" << endl << flush;
                         Suggestion(Queue);
-                        cout << "Enter the queue number you want to enter: ";
+                        cout << "Please enter your preferred entry gate number: ";
                         cin >> queue_num;
-                        cout << endl;
                         while ( queue_num <= 0 || queue_num > N ){
-                            cout << "Enter valid queue number: ";
+                            cout << "Oops! Please enter a gate number between 1 and " << N << ": ";
                             cin >> queue_num;
                         }
+                        Delete(Queue, SerialStat[sr_num].second, sr_num);
                         SerialStat[sr_num].second = queue_num - 1;
                         Queue[queue_num - 1].push_front(sr_num);
+                        cout << "Your queue has been updated. You are now in the queue for Gate " << queue_num << "." << endl;
+
                     }
-                }
-                else if ( SerialStat[sr_num].first == 1 ){
-                    cout << "You want to switch your queue, so Suggestions by entry queue manager:" << endl;
-                    Suggestion(Queue);
-                    cout << "Enter the queue number you want to enter: ";
-                    cin >> queue_num;
-                    while ( queue_num <= 0 || queue_num > N ){
-                        cout << "Enter valid queue number: ";
-                        cin >> queue_num;
+                    else{
+                        cout << "You have already entered the stadium. Re-entry is not permitted." << endl << endl;
                     }
-                    Delete(Queue, SerialStat[sr_num].second, sr_num);
-                    SerialStat[sr_num].second = queue_num - 1;
-                    Queue[queue_num - 1].push_front(sr_num);
+                    break;
                 }
-                else{
-                    cout << "Re-entry is not allowed!" << endl;
+                else
+                {
+                    cout << "The serial number you entered is invalid. Please try again with a valid 7-digit serial number." << endl << endl;
+                    continue;
                 }
-                break;
             }
-            else
-            {
-                cout << "Invalid serial number entered!" << endl;
-                continue;
+            else{
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "We couldn't understand your input. Please make sure to enter a 7-digit serial number." << endl;
             }
         }
-        while ( ( n < ( M / 2 - 1 ) + ( M % 2 ) ) || CountPeopleLeft(Queue) != 0 ){
-            cout << "Moving onto the next person..." << endl << endl;
-            n++;
+        
+        while ( ( counter < ( M / 2 - 1 ) + ( M % 2 ) ) || CountPeopleLeft(Queue) != 0 ){
+            cout << "Next, please!" << endl << endl;
+            counter++;
             break;
         }
-        if ( ( n < ( M / 2 - 1 ) + ( M % 2 ) ) || CountPeopleLeft(Queue) != 0 ){
+        
+        if ( ( counter < ( M / 2 - 1 ) + ( M % 2 ) ) || CountPeopleLeft(Queue) != 0 ){
             continue;
         }
         else
             break;
     }
-    do{
-        continue;
-    }while(CountPeopleLeft(Queue));
-    cout << "Total time: " << stat.ElapsedMinutes() << endl;
+    cout << "All attendees have been processed. Total processing time: " << stat.ElapsedMinutes() << " minutes." << endl;
         return 0;
 }
