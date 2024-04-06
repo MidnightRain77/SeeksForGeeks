@@ -11,6 +11,20 @@ const int M = 500; //Capacity of the stadium
 const int N = 10; //Number of entry gates
 const int p = 1; //mins it takes for a single attendee to enter any gate
 
+class Counter{
+    int Done;
+public:
+    Counter() : Done(0) {};
+    
+    void increase (){
+        Done++;
+    }
+    
+    int isEmpty(){
+        return ( Done == M ) ? 1 : 0;
+    }
+};
+
 //Calculate the time passed since the opening of entry gates
 class Stopwatch{
     time_point <high_resolution_clock> start;
@@ -123,13 +137,14 @@ void Delete ( deque<int> (&Queue)[N], int Gate, int Serial_No ){
 }
 
 //Function to automatically dequeue people into the stadium
-void AutoDequeue ( deque<int> (&Queue)[N], pair<short int, int> (&SerialStat)[M], int* counter ){
-    while ( CountPeopleLeft ( Queue ) && *counter ){
+void AutoDequeue ( deque<int> (&Queue)[N], pair<short int, int> (&SerialStat)[M], Counter& counter ){
+    while ( CountPeopleLeft ( Queue ) && !counter.isEmpty() ){
         this_thread::sleep_for(minutes(p));
         for ( int i = 0 ; i < N ; i++ ){
             if ( Queue[i].size() ){
                 SerialStat[Queue[i].back()].first = 2;
                 Queue[i].pop_back();
+                counter.increase();
             }
         }
     }
@@ -140,15 +155,14 @@ int main() {
     deque<int> Queue[N];
     int sr_num;
     int queue_num;
-    int counter = 0;
     CreateSerialNo(SerialStat);
     AssignRandomGate(SerialStat, Queue);
     Distribute(Queue);
     Stopwatch stat;
-    thread t(AutoDequeue, std::ref(Queue), std::ref(SerialStat), &counter );
+    Counter counter;
+    thread t(AutoDequeue, std::ref(Queue), std::ref(SerialStat), std::ref(counter) );
     t.detach();
     while(true){
-        counter += 1;
         while(true){
             cout << "Welcome to the Entry Queue Management System!" << endl << flush;
             cout << "Please enter your 7-digit serial number: " << flush;
@@ -209,18 +223,12 @@ int main() {
             }
         }
         
-        while ( ( counter < M ) || CountPeopleLeft(Queue) != 0 ){
-            cout << "Next, please!" << endl << endl << flush;
-            counter++;
+        if ( counter.isEmpty() ){
             break;
-        }
-        
-        if ( ( counter < M ) || CountPeopleLeft(Queue) != 0 ){
-            continue;
         }
         else
-            break;
+            continue;
     }
-    cout << "All attendees have been processed. Total processing time: " << stat.ElapsedMinutes() << " minutes." << endl << flush;
+    cout << "All spectators have been processed. Total processing time: " << stat.ElapsedMinutes() << " minutes." << endl << flush;
         return 0;
 }
