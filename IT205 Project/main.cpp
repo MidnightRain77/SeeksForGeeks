@@ -7,7 +7,7 @@
 #include <vector>
 using namespace std::chrono;
 using namespace std;
-const int M = 1000; //Capacity of the stadium
+const int M = 500; //Capacity of the stadium
 const int N = 10; //Number of entry gates
 const int p = 1; //mins it takes for a single attendee to enter any gate
 
@@ -124,7 +124,7 @@ void Delete ( deque<int> (&Queue)[N], int Gate, int Serial_No ){
 
 //Function to automatically dequeue people into the stadium
 void AutoDequeue ( deque<int> (&Queue)[N], pair<short int, int> (&SerialStat)[M], int* counter ){
-    while ( CountPeopleLeft ( Queue ) ){
+    while ( CountPeopleLeft ( Queue ) && *counter ){
         this_thread::sleep_for(minutes(p));
         for ( int i = 0 ; i < N ; i++ ){
             if ( Queue[i].size() ){
@@ -205,18 +205,17 @@ int main() {
             }
             else{
                 cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "We couldn't understand your input. Please make sure to enter a 7-digit serial number." << endl << flush;
             }
         }
         
-        while ( ( counter < ( M / 2 - 1 ) + ( M % 2 ) ) || CountPeopleLeft(Queue) != 0 ){
+        while ( ( counter < M ) || CountPeopleLeft(Queue) != 0 ){
             cout << "Next, please!" << endl << endl << flush;
             counter++;
             break;
         }
         
-        if ( ( counter < ( M / 2 - 1 ) + ( M % 2 ) ) || CountPeopleLeft(Queue) != 0 ){
+        if ( ( counter < M ) || CountPeopleLeft(Queue) != 0 ){
             continue;
         }
         else
