@@ -103,14 +103,13 @@ void Suggestion ( deque<int> (&Queue)[N] ){
         if ( Queue[i].size() < min )
             min = Queue[i].size();
     }
-    cout << "Least waiting time is: " << p*min << " minutes" << endl;
-    cout << "Following queue numbers have the least waiting time as of now:" << endl;
+    cout << "Least waiting time is: " << p*min << " minutes" << endl << flush;
+    cout << "Following queue numbers have the least waiting time as of now:" << endl << flush;
     for ( int i = 0 ; i < N ; i++ ){
         if ( min == Queue[i].size() )
             cout << i + 1 << " ";
     }
-    cout << endl;
-    cout << "You can choose from queue number 1 to " << N << endl;
+    cout << endl << "You can choose from queue number 1 to " << N << endl << flush;
 }
 
 //Function to delete a particular serial number from a queue
@@ -151,26 +150,26 @@ int main() {
     while(true){
         counter += 1;
         while(true){
-            cout << "Welcome to the Entry Queue Management System!" << endl;
-            cout << "Please enter your 7-digit serial number: ";
+            cout << "Welcome to the Entry Queue Management System!" << endl << flush;
+            cout << "Please enter your 7-digit serial number: " << flush;
             if ( cin >> sr_num ){
                 sr_num -= 1000000;
                 cout << endl;
                 if ( sr_num >= 0 && sr_num < M ){
                     if ( SerialStat[sr_num].first == 0 ){
                         if ( HashFunction(sr_num) ){
-                            cout << "Welcome, VIP! You will be directed to our exclusive entry gate." << endl;
+                            cout << "Welcome, VIP! You will be directed to our exclusive entry gate." << endl << flush;
                             SerialStat[sr_num].first = 2;
                         }
                         else{
                             SerialStat[sr_num].first = 1;
-                            cout << "Here are the recommended entry gates based on the current wait time:" << endl;
+                            cout << "Here are the recommended entry gates based on the current wait time:" << endl << flush;
                             Suggestion(Queue);
-                            cout << "Please enter your preferred entry gate number: ";
+                            cout << "Please enter your preferred entry gate number: " << flush;
                             cin >> queue_num;
                             cout << endl;
                             while ( queue_num <= 0 || queue_num > N ){
-                                cout << "Oops! Please enter a gate number between 1 and " << N << ": ";
+                                cout << "Oops! Please enter a gate number between 1 and " << N << ": " << flush;
                                 cin >> queue_num;
                             }
                             SerialStat[sr_num].second = queue_num - 1;
@@ -181,38 +180,38 @@ int main() {
                         cout << "It looks like you're already in a queue. Do you wish to switch to a different gate?" << endl << flush;
                         cout << "Here are the recommended entry gates based on the current wait time:" << endl << flush;
                         Suggestion(Queue);
-                        cout << "Please enter your preferred entry gate number: ";
+                        cout << "Please enter your preferred entry gate number: " << flush;
                         cin >> queue_num;
                         while ( queue_num <= 0 || queue_num > N ){
-                            cout << "Oops! Please enter a gate number between 1 and " << N << ": ";
+                            cout << "Oops! Please enter a gate number between 1 and " << N << ": " << flush;
                             cin >> queue_num;
                         }
                         Delete(Queue, SerialStat[sr_num].second, sr_num);
                         SerialStat[sr_num].second = queue_num - 1;
                         Queue[queue_num - 1].push_front(sr_num);
-                        cout << "Your queue has been updated. You are now in the queue for Gate " << queue_num << "." << endl;
+                        cout << "Your queue has been updated. You are now in the queue for Gate " << queue_num << "." << endl << flush;
 
                     }
                     else{
-                        cout << "You have already entered the stadium. Re-entry is not permitted." << endl << endl;
+                        cout << "You have already entered the stadium. Re-entry is not permitted." << endl << endl << flush;
                     }
                     break;
                 }
                 else
                 {
-                    cout << "The serial number you entered is invalid. Please try again with a valid 7-digit serial number." << endl << endl;
+                    cout << "The serial number you entered is invalid. Please try again with a valid 7-digit serial number." << endl << endl << flush;
                     continue;
                 }
             }
             else{
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "We couldn't understand your input. Please make sure to enter a 7-digit serial number." << endl;
+                cout << "We couldn't understand your input. Please make sure to enter a 7-digit serial number." << endl << flush;
             }
         }
         
         while ( ( counter < ( M / 2 - 1 ) + ( M % 2 ) ) || CountPeopleLeft(Queue) != 0 ){
-            cout << "Next, please!" << endl << endl;
+            cout << "Next, please!" << endl << endl << flush;
             counter++;
             break;
         }
@@ -223,6 +222,6 @@ int main() {
         else
             break;
     }
-    cout << "All attendees have been processed. Total processing time: " << stat.ElapsedMinutes() << " minutes." << endl;
+    cout << "All attendees have been processed. Total processing time: " << stat.ElapsedMinutes() << " minutes." << endl << flush;
         return 0;
 }
