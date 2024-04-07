@@ -172,7 +172,7 @@ Space complexity is O(n) where n is the total number of people in the waiting li
 
 CONTRIBUTION TABLE: 
 
-|FUNCTIONS|Jiya Patel|Hiya Modi|Yashasvi Jadav|Kavya Parmar|
-|:----|:----:|----:|
-
+| FUNCTIONS | Jiya Patel | Hiya Modi | Yashasvi Jadav | Kavya Parmar |
+| --- | --- | --- |
+| Main | 65% | 20% | 10% | 5% |
 
