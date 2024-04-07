@@ -172,7 +172,19 @@ Space complexity is O(n) where n is the total number of people in the waiting li
 
 CONTRIBUTION TABLE: 
 
-| FUNCTIONS | Jiya Patel | Hiya Modi | Yashasvi Jadav | Kavya Parmar |
-| --------- | ---------- | --------- | ---------      | --------     |
-| Main      | 65%        | 20%       | 10%            | 5%           |
+| FUNCTIONS          | Jiya Patel | Hiya Modi | Yashasvi Jadav | Kavya Parmar |
+| ---------          | ---------- | --------- | ---------      | --------     |
+| Main Function      | 65%        | 20%       | 10%            | 5%           |
+| Class Counter      | 65%        | 20%       | 10%            | 5%           |
+| Class Stopwatch    | 65%        | 20%       | 10%            | 5%           |
+| HashFunction       | 65%        | 20%       | 10%            | 5%           |
+| CreateSerialNo     | 65%        | 20%       | 10%            | 5%           |
+| AssignRandomGate   | 65%        | 20%       | 10%            | 5%           |
+| Distribute         | 65%        | 20%       | 10%            | 5%           |
+| Suggestion         | 65%        | 20%       | 10%            | 5%           |
+| Delete             | 65%        | 20%       | 10%            | 5%           |
+| AutoDequeue        | 65%        | 20%       | 10%            | 5%           |
+
+
+
 
