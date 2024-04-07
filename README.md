@@ -1,15 +1,15 @@
 <h2>ENTRY QUEUE MANAGER SYSTEM</h2> 
-<h4>PROJECT ID:</h4> P3
+<h4>PROJECT ID: P3</h4> 
 
-<h4>TEAM MEMBERS :</h4>
+<h4>TEAM MEMBERS : </h4>
 1. Jiya Patel - 202301034<br /> 
 2. Hiya Modi - 202301011<br /> 
 3. Yashasvi Jadav - 202301069<br /> 
 4. Kavya Parmar - 202301085<br /> 
 
-<h4>TEAM ID: SeeksForGeeks<br /> </h4>
+<h4>TEAM ID: SeeksForGeeks </h4><br />
 
-<h4>ALGORITHM :<br /> </h4>
+<h4>ALGORITHM :</h4><br /> 
 
 1. Initialize constants:<br /> <br /> 
     a. Constant M as the capacity of the stadium<br /> 
