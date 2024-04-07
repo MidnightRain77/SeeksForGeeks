@@ -9,6 +9,9 @@
 
 <h4>TEAM ID: SeeksForGeeks </h4><br />
 
+<h4>TIME COMPLEXITY: O(M)</h4><br />
+<h4>SPACE COMPLEXITY: O(M)</h4><br />
+
 <h4>ALGORITHM :</h4><br /> 
 
 1. Initialize constants:<br /> <br /> 
