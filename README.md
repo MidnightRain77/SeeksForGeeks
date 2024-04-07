@@ -1,18 +1,17 @@
-<h2>ENTRY QUEUE MANAGER SYSTEM 
+<h2>ENTRY QUEUE MANAGER SYSTEM</h2> 
+<h4>PROJECT ID:</h4> P3
 
-<h4>PROJECT ID: P3
-
-<h4>TEAM MEMBERS :
-<h5></h5>1. Jiya Patel - 202301034<br /> 
+<h4>TEAM MEMBERS :</h4>
+1. Jiya Patel - 202301034<br /> 
 2. Hiya Modi - 202301011<br /> 
 3. Yashasvi Jadav - 202301069<br /> 
 4. Kavya Parmar - 202301085<br /> 
 
-<h4>TEAM ID: SeeksForGeeks<br /> 
+<h4>TEAM ID: SeeksForGeeks<br /> </h4>
 
-<h4>ALGORITHM :<br /> 
+<h4>ALGORITHM :<br /> </h4>
 
-<h5>1. Initialize constants:<br /> <br /> 
+1. Initialize constants:<br /> <br /> 
     a. Constant M as the capacity of the stadium<br /> 
     b. Constant N as the number of entry gates<br /> 
     c. Constant p as the minutes it takes for a single attendee to enter key<br /> 
@@ -157,15 +156,15 @@ Set a long variable min to the size of the first deque in Queue.<br />
         - If the counter is not empty, proceed with the outer loop.<br /> 
         - Once the counter is empty, exit the outer loop.<br /> 
         - Print the total processing time using stat.ElapsedMinutes().<br /> 
-        - Return 0 to indicate successful completion of the program.<br /> 
+        - Return 0 to indicate successful completion of the program.<br /> <br /> 
 
 
 
 
-WHY DID WE CHOOSE THE SPECIFIC DATA STRUCTURE?<br /> <br /> 
+<h4>WHY DID WE CHOOSE THE SPECIFIC DATA STRUCTURE?<br /> <br /> </h4>
 
 
-An array of deque, in which each deque represents the queue at each gate, is used in this code to efficiently manage people waiting to enter the stadium. 
+<h5>An array of deque, in which each deque represents the queue at each gate, is used in this code to efficiently manage people waiting to enter the stadium. 
 Unlike arrays, deque allows dynamic allocation of memory which is very useful in this scenario as the people in the queue keep changing which requires more insertion and deletion operations. 
 It also allows insertion and deletion at both ends of the queue in constant time complexity O(1). 
 The random access of the deque allows us to efficiently implement the switching queue functionality of the program.
@@ -178,7 +177,7 @@ The second of the pair is an integer type data which stores the queue number in 
 
 <br />
 <br /> 
-CONTRIBUTION TABLE: <br /><br /> 
+<h4>CONTRIBUTION TABLE: <br /><br /> </h4>
 
 
 | FUNCTIONS          | Jiya Patel | Hiya Modi | Yashasvi Jadav | Kavya Parmar |
