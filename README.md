@@ -69,9 +69,9 @@
         - If applicable, determine shift as the difference between the size of deque and limit.<br /> 
         - Increment extra by shift.<br /> 
         - While shift is greater than 0:<br /> 
-        &nbsp    - Push the front element of the deque at index i into reshuff.<br /> 
-        &nbsp    - Pop the front element from the deque at index i.<br /> 
-        &nbsp    - Decrement shift by 1.<br /> 
+            - Push the front element of the deque at index i into reshuff.<br /> 
+            - Pop the front element from the deque at index i.<br /> 
+            - Decrement shift by 1.<br /> 
     g. Start the for loop iterating from 0 to N-1:<br /> 
         - If the size of the deque at index i in Queue is less than limit.<br /> 
         - If applicable, determine shift as the difference between the limit and the size of deque.<br /> 
