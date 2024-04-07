@@ -69,9 +69,9 @@
         - If applicable, determine shift as the difference between the size of deque and limit.<br /> 
         - Increment extra by shift.<br /> 
         - While shift is greater than 0:<br /> 
-            - Push the front element of the deque at index i into reshuff.<br /> 
-            - Pop the front element from the deque at index i.<br /> 
-            - Decrement shift by 1.<br /> 
+        &nbsp    - Push the front element of the deque at index i into reshuff.<br /> 
+        &nbsp    - Pop the front element from the deque at index i.<br /> 
+        &nbsp    - Decrement shift by 1.<br /> 
     g. Start the for loop iterating from 0 to N-1:<br /> 
         - If the size of the deque at index i in Queue is less than limit.<br /> 
         - If applicable, determine shift as the difference between the limit and the size of deque.<br /> 
@@ -136,12 +136,12 @@ Set a long variable min to the size of the first deque in Queue.<br />
             - Display a prompt to user to enter their 7-digit serial number.<br /> 
             - Read the serial number. If the user input is successful, subtract 1000000 from the serial number to normalize it and use it as an index.<br /> 
             - Verify if the normalized serial number falls within a range greater than or equal to 0 and less than M.<br /> 
-            - If the serial number is valid and its status in `SerialStat` indicates it is not already processed, then check if it qualifies as a VIP using the `HashFunction`.<br /> 
-            - If the serial number is valid and its status is 0, evaluate if it qualifies VIP status using 'HashFunction'.<br /> 
+            - If the serial number is valid and its status in SerialStat indicates it is not already processed, then check if it qualifies as a VIP using the HashFunction.<br /> 
+            - If the serial number is valid and its status is 0, evaluate if it qualifies VIP status using HashFunction.<br /> 
             - If the serial number qualifies as VIP, set its status to 2 and display a welcome message for VIPs.<br /> 
-            - If the serial number is not VIP, set its status to 1, display available entry gates using `Suggestion(Queue)`, and prompt for a preferred gate number.<br /> 
-            - Read the preferred gate number and validate it to ensure it is between 1 and `N`.<br /> 
-            - If the gate number is valid, update the serial number's associated queue number in `SerialStat` and add the serial number to the front of the selected queue in `Queue`.<br /> 
+            - If the serial number is not VIP, set its status to 1, display available entry gates using Suggestion(Queue), and prompt for a preferred gate number.<br /> 
+            - Read the preferred gate number and validate it to ensure it is between 1 and N.<br /> 
+            - If the gate number is valid, update the serial number's associated queue number in SerialStat and add the serial number to the front of the selected queue in Queue.<br /> 
             - Display a message with recommended entry gates based on the current wait time by calling the Suggestion(Queue) function.<br /> 
             - Display a prompt for the user to input their preferred entry gate number, and proceed to read the input.<br /> 
             - Validate the entered gate number to ensure it is in the range 1 and N. If the number is invalid, prompt the user to enter a valid gate number until a valid one is provided.<br /> 
