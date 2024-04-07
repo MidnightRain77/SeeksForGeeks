@@ -1,4 +1,4 @@
-ENTRY QUEUE MANAGER SYSTEM :
+<h3>**ENTRY QUEUE MANAGER SYSTEM :**
 
 PROJECT ID: P3
 
@@ -170,9 +170,9 @@ The random access of the deque allows us to efficiently implement the switching 
 Space complexity is O(n) where n is the total number of people in the waiting lines.
 
 
+**CONTRIBUTION TABLE: **
 
-
-
-
+|FUNCTIONS|Jiya Patel|Hiya Modi|Yashasvi Jadav|Kavya Parmar|
+|:----|:----:|----:|
 
 
