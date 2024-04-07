@@ -17,7 +17,7 @@
 <h5>1. Initialize constants:<br />
     a. Constant M as the capacity of the stadium<br />
     b. Constant N as the number of entry gates<br />
-    c. Constant p as the minutes it takes for a single attendee to any gate<br />
+    c. Constant p as the minutes it takes for a single attendee to enter any gate<br />
 
 2. Create a class Stopwatch:<br />
     a. A private member variable 'start' is the time when the stopwatch starts.<br />
