@@ -174,15 +174,15 @@ CONTRIBUTION TABLE:
 
 | FUNCTIONS          | Jiya Patel | Hiya Modi | Yashasvi Jadav | Kavya Parmar |
 | ---------          | ---------- | --------- | ---------      | --------     |
-| Main Function      | 65%        | 20%       | 10%            | 5%           |
+| Main Function      | 20%        | 65%       | 10%            | 5%           |
 | Class Counter      | 65%        | 20%       | 10%            | 5%           |
-| Class Stopwatch    | 65%        | 20%       | 10%            | 5%           |
-| HashFunction       | 65%        | 20%       | 10%            | 5%           |
-| CreateSerialNo     | 65%        | 20%       | 10%            | 5%           |
-| AssignRandomGate   | 65%        | 20%       | 10%            | 5%           |
-| Distribute         | 65%        | 20%       | 10%            | 5%           |
-| Suggestion         | 65%        | 20%       | 10%            | 5%           |
-| Delete             | 65%        | 20%       | 10%            | 5%           |
+| Class Stopwatch    | 65%        | 5%        | 10%            | 20%          |
+| HashFunction       | 0%         | 0%        | 100%           | 0%           |
+| CreateSerialNo     | 0%         | 0%        | 0%             | 100%         |
+| AssignRandomGate   | 20%        | 10%       | 65%            | 5%           |
+| Distribute         | 20%        | 65%       | 10%            | 5%           |
+| Suggestion         | 10%        | 65%       | 20%            | 5%           |
+| Delete             | 20%        | 10%       | 65%            | 5%           |
 | AutoDequeue        | 65%        | 20%       | 10%            | 5%           |
 
 
