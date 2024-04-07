@@ -181,7 +181,7 @@ The second of the pair is an integer type data which stores the queue number in 
 | FUNCTIONS          | Jiya Patel | Hiya Modi | Yashasvi Jadav | Kavya Parmar |
 | ---------          | ---------- | --------- | ---------      | --------     |
 | Main Function      | 20%        | 65%       | 10%            | 5%           |
-| Class Counter      | 65%        | 20%       | 10%            | 5%           |
+| CountPeopleLeft    | 100%       | 0%        | 0%             | 0%           |
 | Class Stopwatch    | 65%        | 5%        | 10%            | 20%          |
 | HashFunction       | 0%         | 0%        | 100%           | 0%           |
 | CreateSerialNo     | 0%         | 0%        | 0%             | 100%         |
