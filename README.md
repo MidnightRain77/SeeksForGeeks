@@ -14,7 +14,7 @@
 
 <h4>ALGORITHM :</h4><br /> 
 
-1. Initialize constants:<br />
+<h5>1. Initialize constants:<br />
     a. Constant M as the capacity of the stadium<br />
     b. Constant N as the number of entry gates<br />
     c. Constant p as the minutes it takes for a single attendee to any gate<br />
