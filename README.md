@@ -14,7 +14,7 @@
 1. Initialize constants:<br /> <br /> 
     a. Constant M as the capacity of the stadium<br /> 
     b. Constant N as the number of entry gates<br /> 
-    c. Constant p as the minutes it takes for a single attendee to enter key<br /> 
+    c. Constant p as the minutes it takes for a single attendee to enter any gate<br /> 
 
 2. Create a class Counter :<br /> <br /> 
     a. A member variable 'Done' to keep the record of the total number of processed entries.<br /> 
