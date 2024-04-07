@@ -1,8 +1,8 @@
-ENTRY QUEUE MANAGER SYSTEM :
+<h3>ENTRY QUEUE MANAGER SYSTEM :
 
-PROJECT ID: P3
+<h2>PROJECT ID: P3
 
-TEAM MEMBERS :
+<h2>TEAM MEMBERS :
 1. Jiya Patel - 202301034
 2. Hiya Modi - 202301011
 3. Yashasvi Jadav - 202301069
@@ -10,9 +10,9 @@ TEAM MEMBERS :
 
 TEAM ID: SeeksForGeeks
 
-ALGORITHM :
+<h2>ALGORITHM :
 
-1. Initialize constants:
+<h1>1. Initialize constants:
     a. Constant M as the capacity of the stadium<br /> 
     b. Constant N as the number of entry gates<br /> 
     c. Constant p as the minutes it takes for a single attendee to enter key<br /> 
@@ -21,13 +21,13 @@ ALGORITHM :
     a. A member variable 'Done' to keep the record of the total number of processed entries.<br /> 
     b. A member variable 'count_VIP' to keep the record of the number of VIP entries processed.<br /> 
     c. Define a Constructor Counter():<br /> 
-    *Tabspace*- Initialize the Done variable to 0.<br /> 
+        - Initialize the Done variable to 0.<br /> 
     d. Define a public member function 'increase()':<br /> 
-     *Tabspace*   - Increment done variable by 1. This function is called whenever a VIP or non-VIP entry is processed.<br /> 
+        - Increment done variable by 1. This function is called whenever a VIP or non-VIP entry is processed.<br /> 
     e. Define a public member function 'increase_VIP()':<br /> 
-    *Tabspace*    - Increment count_VIP by 1. This function is called when a VIP entry is processed.<br /> 
+        - Increment count_VIP by 1. This function is called when a VIP entry is processed.<br /> 
     f. Define a public member function 'isEmpty()' :<br /> 
-    *Tabspace*    - Verify if all non-VIP entries have been processed by comparing Done the total number of entries (M) minus the number of VIP entries (count_VIP).<br /> 
+        - Verify if all non-VIP entries have been processed by comparing Done the total number of entries (M) minus the number of VIP entries (count_VIP).<br /> 
         - Return 1 if Done is equal to M minus count_VIP, showing that there are no more non-VIP entries to process.<br /> 
         - Otherwise, Return 0. <br /> 
 
