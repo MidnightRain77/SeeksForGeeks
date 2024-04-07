@@ -1,23 +1,23 @@
-<h2>ENTRY QUEUE MANAGER SYSTEM :
+<h2>ENTRY QUEUE MANAGER SYSTEM 
 
 <h4>PROJECT ID: P3
 
 <h4>TEAM MEMBERS :
-<h5></h5>1. Jiya Patel - 202301034
-2. Hiya Modi - 202301011
-3. Yashasvi Jadav - 202301069
-4. Kavya Parmar - 202301085
+<h5></h5>1. Jiya Patel - 202301034<br /> 
+2. Hiya Modi - 202301011<br /> 
+3. Yashasvi Jadav - 202301069<br /> 
+4. Kavya Parmar - 202301085<br /> 
 
-<h4>TEAM ID: SeeksForGeeks
+<h4>TEAM ID: SeeksForGeeks<br /> 
 
-<h4>ALGORITHM :
+<h4>ALGORITHM :<br /> 
 
-<h5>1. Initialize constants:
+<h5>1. Initialize constants:<br /> <br /> 
     a. Constant M as the capacity of the stadium<br /> 
     b. Constant N as the number of entry gates<br /> 
     c. Constant p as the minutes it takes for a single attendee to enter key<br /> 
 
-2. Create a class Counter :
+2. Create a class Counter :<br /> <br /> 
     a. A member variable 'Done' to keep the record of the total number of processed entries.<br /> 
     b. A member variable 'count_VIP' to keep the record of the number of VIP entries processed.<br /> 
     c. Define a Constructor Counter():<br /> 
@@ -31,21 +31,21 @@
         - Return 1 if Done is equal to M minus count_VIP, showing that there are no more non-VIP entries to process.<br /> 
         - Otherwise, Return 0. <br /> 
 
-3. Create a class Stopwatch:<br /> 
+3. Create a class Stopwatch:<br /> <br /> 
     a. A private member variable 'start' is the time when the stopwatch starts.<br /> 
     b. A public constructor that initializes the 'start' with the current time high_resolution_clock time.<br /> 
     c. A public function 'ElapsedMinutes' calculates the elapsed time in minutes since the start time and returns it.<br /> 
 
-4. Define a function 'HashFunction':<br /> 
+4. Define a function 'HashFunction':<br /> <br /> 
     a. Takes input of Serial_No.<br /> 
     b. Return 1 if 'Serial_No' is divisible by M/8 not having remainder, which states that the spectator is VIP.<br /> 
 
-5. Define function 'CreateSerialNo' :<br /> 
+5. Define function 'CreateSerialNo' :<br /> <br /> 
     a. Takes input of an array 'SerialStat' of pairs, where the pair has a short integer and integer.<br /> 
     b. For each index i, initialize the first element of the pair at index i in SerialStat to 0.<br /> 
     c. End the for loop.<br /> 
 
-6. Define function 'AssignRandomGate' :<br /> 
+6. Define function 'AssignRandomGate' :<br /> <br /> 
     a. Takes input of an array 'SerialStat' of pairs, where the pair has a short integer and integer, and an array Queue of deques that is the gate queue, a reference to an instance of the Counter class named counter.<br /> 
     b. Seed the random number generator with the current time for random numbers in each run.<br /> 
     c. Start the loop that iterates M/2 times, where M is the size of the array SerialStat.<br /> 
@@ -59,7 +59,7 @@
     h. Set the first element of the pair at index serial in SerialStat to 1 as the serial number is now assigned.<br /> 
     i. End of the loop.<br /> 
 
-7. Define function 'Distribute' :<br /> 
+7. Define function 'Distribute' :<br /> <br /> 
     a. Takes the input of an array Queue of deques, where each deque represents a queue at a gate. <br /> 
     b. Calculate the limit as the integer value of M by N, where M and N are the total number of people and number of gates respectively.<br /> 
     c. Set extra to 0, to keep the record of the total number of people requiring redistribution.<br /> 
@@ -89,7 +89,7 @@
                 - Break the loop.<br /> 
         - If extra is less than or equal to 0, break the loop.<br /> 
 
-8. Define function 'Suggestion' :<br /> 
+8. Define function 'Suggestion' :<br /> <br /> 
 Takes input of an array Queue of deques, where each deque represents a queue at a gate.<br /> 
 Set a long variable min to the size of the first deque in Queue.<br /> 
  Start the for loop that iterates from index 0 to N-1, where N is the number of gates.<br /> 
@@ -103,14 +103,14 @@ Set a long variable min to the size of the first deque in Queue.<br />
         - After listing all queues with the least waiting time, provide a message informing the user that they can select from queue number 1 to N.<br /> 
         - Flush the output to ensure immediate printing of all messages.<br /> 
 
-9. Define function 'Delete' :<br /> 
+9. Define function 'Delete' :<br /> <br /> 
  Takes input of an array Queue of deques, where each deque represents a queue at a gate, an integer Gate representing the gate number, and an integer Serial_No representing the serial number to be deleted.<br /> 
  Start the for loop which iterates over the deque at index Gate in the Queue array. Use variable i for iteration from 0 to the size of the deque at Gate minus 1.<br /> 
         - For each i, check if the element at the ith position in the deque at Gate is equal to Serial_No.<br /> 
         - If yes, obtain an iterator 'it' to the ith position in the deque by adding 'i' to the initial iterator of the deque.<br /> 
         - Erase the element at iterator 'it' from the deque at Gate.<br /> 
 
-10. Define function 'AutoDequeue' :<br /> 
+10. Define function 'AutoDequeue' :<br /> <br /> 
  Takes input of an array Queue of deques representing queues at each gate, an array SerialStat of pairs where each pair holds the status and additional information for each serial number, and a pointer counter to an integer.<br /> 
  Start the loop that will iterate as long as people are remaining in any of the queues.<br /> 
         - Put the current thread to sleep for p minutes. Here p is a predefined constant showing the processing time per person.<br /> 
@@ -120,7 +120,7 @@ Set a long variable min to the size of the first deque in Queue.<br />
             - Call pop_back() to remove the last element from the deque at Queue[i].<br /> 
                 Continue iterating the process until CountPeopleLeft returns 0, showing that no more people are waiting in the queues.<br /> 
 
-11. Define Main Function :<br /> 
+11. Define Main Function :<br /> <br /> 
     a. Declare a global array SerialStat of pairs, where each pair contains a short int and an int. <br /> 
     b. Declare a global deque Queue.<br /> 
     c. Declare a variable sr_num for serial number input by the user.<br /> 
@@ -162,7 +162,7 @@ Set a long variable min to the size of the first deque in Queue.<br />
 
 
 
-WHY DID WE CHOOSE THE SPECIFIC DATA STRUCTURE?
+WHY DID WE CHOOSE THE SPECIFIC DATA STRUCTURE?<br /> <br /> 
 
 
 An array of deque, in which each deque represents the queue at each gate, is used in this code to efficiently manage people waiting to enter the stadium. 
@@ -177,8 +177,8 @@ An array of pair of size M stores two components: first stores a short integer t
 The second of the pair is an integer type data which stores the queue number in which an individual is waiting as of now (if the first of the said individual is 1). This data structure is essentially added to decrease the time complexity to O(M) instead of O(MN), as there is direct access of the elements in the array of pair. 
 
 <br />
-
-CONTRIBUTION TABLE: <br />
+<br /> 
+CONTRIBUTION TABLE: <br /><br /> 
 
 
 | FUNCTIONS          | Jiya Patel | Hiya Modi | Yashasvi Jadav | Kavya Parmar |
