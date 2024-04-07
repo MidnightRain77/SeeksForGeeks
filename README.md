@@ -1,18 +1,18 @@
-ENTRY QUEUE MANAGER SYSTEM :
+<h2>ENTRY QUEUE MANAGER SYSTEM :
 
-PROJECT ID: P3
+<h4>PROJECT ID: P3
 
-TEAM MEMBERS :
-1. Jiya Patel - 202301034
+<h4>TEAM MEMBERS :
+<h5></h5>1. Jiya Patel - 202301034
 2. Hiya Modi - 202301011
 3. Yashasvi Jadav - 202301069
 4. Kavya Parmar - 202301085
 
-TEAM ID: SeeksForGeeks
+<h4>TEAM ID: SeeksForGeeks
 
-ALGORITHM :
+<h4>ALGORITHM :
 
-1. Initialize constants:
+<h5>1. Initialize constants:
     a. Constant M as the capacity of the stadium<br /> 
     b. Constant N as the number of entry gates<br /> 
     c. Constant p as the minutes it takes for a single attendee to enter key<br /> 
