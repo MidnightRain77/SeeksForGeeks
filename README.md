@@ -1,8 +1,8 @@
-<h3>ENTRY QUEUE MANAGER SYSTEM :
+ENTRY QUEUE MANAGER SYSTEM :
 
-<h2>PROJECT ID: P3
+PROJECT ID: P3
 
-<h2>TEAM MEMBERS :
+TEAM MEMBERS :
 1. Jiya Patel - 202301034
 2. Hiya Modi - 202301011
 3. Yashasvi Jadav - 202301069
@@ -10,7 +10,7 @@
 
 TEAM ID: SeeksForGeeks
 
-<h2>ALGORITHM :
+ALGORITHM :
 
 <h1>1. Initialize constants:
     a. Constant M as the capacity of the stadium<br /> 
@@ -161,7 +161,9 @@ Set a long variable min to the size of the first deque in Queue.<br />
 
 
 
+
 WHY DID WE CHOOSE THE SPECIFIC DATA STRUCTURE?
+
 
 An array of deque, in which each deque represents the queue at each gate, is used in this code to efficiently manage people waiting to enter the stadium. 
 Unlike arrays, deque allows dynamic allocation of memory which is very useful in this scenario as the people in the queue keep changing which requires more insertion and deletion operations. 
@@ -174,9 +176,10 @@ An array of pair of size M stores two components: first stores a short integer t
 2 - has already entered the stadium. 
 The second of the pair is an integer type data which stores the queue number in which an individual is waiting as of now (if the first of the said individual is 1). This data structure is essentially added to decrease the time complexity to O(M) instead of O(MN), as there is direct access of the elements in the array of pair. 
 
+<br />
 
+CONTRIBUTION TABLE: <br />
 
-CONTRIBUTION TABLE: 
 
 | FUNCTIONS          | Jiya Patel | Hiya Modi | Yashasvi Jadav | Kavya Parmar |
 | ---------          | ---------- | --------- | ---------      | --------     |
