@@ -21,13 +21,13 @@ ALGORITHM :
     a. A member variable 'Done' to keep the record of the total number of processed entries.<br /> 
     b. A member variable 'count_VIP' to keep the record of the number of VIP entries processed.<br /> 
     c. Define a Constructor Counter():<br /> 
-        - Initialize the Done variable to 0.<br /> 
+    *Tabspace*- Initialize the Done variable to 0.<br /> 
     d. Define a public member function 'increase()':<br /> 
-        - Increment done variable by 1. This function is called whenever a VIP or non-VIP entry is processed.<br /> 
+     *Tabspace*   - Increment done variable by 1. This function is called whenever a VIP or non-VIP entry is processed.<br /> 
     e. Define a public member function 'increase_VIP()':<br /> 
-        - Increment count_VIP by 1. This function is called when a VIP entry is processed.<br /> 
+    *Tabspace*    - Increment count_VIP by 1. This function is called when a VIP entry is processed.<br /> 
     f. Define a public member function 'isEmpty()' :<br /> 
-        - Verify if all non-VIP entries have been processed by comparing Done the total number of entries (M) minus the number of VIP entries (count_VIP).<br /> 
+    *Tabspace*    - Verify if all non-VIP entries have been processed by comparing Done the total number of entries (M) minus the number of VIP entries (count_VIP).<br /> 
         - Return 1 if Done is equal to M minus count_VIP, showing that there are no more non-VIP entries to process.<br /> 
         - Otherwise, Return 0. <br /> 
 
@@ -168,6 +168,12 @@ Unlike arrays, deque allows dynamic allocation of memory which is very useful in
 It also allows insertion and deletion at both ends of the queue in constant time complexity O(1). 
 The random access of the deque allows us to efficiently implement the switching queue functionality of the program.
 Space complexity is O(n) where n is the total number of people in the waiting lines.
+An array of pair of size M stores two components: first stores a short integer type data which indicates the status of an individual either 
+0 - has not entered any queue, 
+1 - is already in a queue or 
+2 - has already entered the stadium. 
+The second of the pair is an integer type data which stores the queue number in which an individual is waiting as of now (if the first of the said individual is 1). This data structure is essentially added to decrease the time complexity to O(M) instead of O(MN), as there is direct access of the elements in the array of pair. 
+
 
 
 CONTRIBUTION TABLE: 
