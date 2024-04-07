@@ -7,9 +7,31 @@
 #include <vector>
 using namespace std::chrono;
 using namespace std;
-const int M = 500; //Capacity of the stadium
+const int M = 100; //Capacity of the stadium
 const int N = 10; //Number of entry gates
-const int p = 1; //mins it takes for a single attendee to enter any gate
+const int p = 1; //mins it takes for a single spectator to enter any gate
+
+class Counter{
+    int Done;
+    int count_VIP;
+public:
+    Counter() : Done(0), count_VIP(0) {};
+    
+    void increase (){
+        Done++;
+    }
+    
+    void increse_VIP(){
+        count_VIP++;
+    }
+    
+    int isEmpty(){
+        return ( Done >= ( M - count_VIP ) ) ? 1 : 0;
+    }
+    void displayvip(){
+        cout<<count_VIP;
+    }
+};
 
 //Calculate the time passed since the opening of entry gates
 class Stopwatch{
@@ -28,24 +50,32 @@ int HashFunction ( int Serial_No ){
 }
 
 //Initializes the pair
-void CreateSerialNo ( pair<short int, int> (&SerialStat)[M] ){
+void CreateSerialNo ( pair<short int, int> (&SerialStat)[M], Counter& counter ){
     for ( int i = 0 ; i < M ; i++ ){
         SerialStat[i].first = 0;
+        if ( HashFunction(i) ){
+            counter.increse_VIP();
+        }
     }
 }
 
 //Function to randomly assign M/2 people to the entry gates
 void AssignRandomGate ( pair<short int, int> (&SerialStat)[M], deque<int> (&Queue)[N] ){
-    srand ( (unsigned int) ( time(0) ) );
+   // srand ( (unsigned int) ( time(0) ) );
     for ( int i = 0 ; i < M/2 ; i++ ){
         int gate = rand() % N;
         int serial;
         do{
             serial = rand() % M;
-        } while( SerialStat[serial].first );
+            if ( !HashFunction(serial) ){
+                if ( !SerialStat[serial].first )
+                    break;
+            }
+        } while(true);
         Queue[gate].push_front(serial);
         SerialStat[serial].first = 1;
     }
+    
 }
 
 //Function to minimize the time for entry of the first M/2 randomly assigned people
@@ -69,7 +99,7 @@ void Distribute ( deque<int> (&Queue)[N] ){
             if ( extra > data ){
                 extra -= data;
                 while ( data ){
-                    Queue[i].push_front( reshuff.back() );
+                    Queue[i].push_front(reshuff.back());
                     reshuff.pop_back();
                     data--;
                 }
@@ -88,19 +118,11 @@ void Distribute ( deque<int> (&Queue)[N] ){
     }
 }
 
-//Counts the total number of people waiting in the queue
-long CountPeopleLeft ( deque<int> (&Queue)[N] ){
-    long left = 0;
-    for ( int i = 0 ; i < N ; i++ )
-        left += Queue[i].size();
-    return left;
-}
-
 //Function to suggest the least waiting time
 void Suggestion ( deque<int> (&Queue)[N] ){
     long min = Queue[0].size();
     for ( int i = 1 ; i < N ; i++ ){
-        if ( Queue[i].size() < min )
+        if ( Queue[i].size() <= min )
             min = Queue[i].size();
     }
     cout << "Least waiting time is: " << p*min << " minutes" << endl << flush;
@@ -123,13 +145,14 @@ void Delete ( deque<int> (&Queue)[N], int Gate, int Serial_No ){
 }
 
 //Function to automatically dequeue people into the stadium
-void AutoDequeue ( deque<int> (&Queue)[N], pair<short int, int> (&SerialStat)[M], int* counter ){
-    while ( CountPeopleLeft ( Queue ) ){
+void AutoDequeue ( deque<int> (&Queue)[N], pair<short int, int> (&SerialStat)[M], Counter& counter ){
+    while ( !counter.isEmpty() ){
         this_thread::sleep_for(minutes(p));
         for ( int i = 0 ; i < N ; i++ ){
             if ( Queue[i].size() ){
                 SerialStat[Queue[i].back()].first = 2;
                 Queue[i].pop_back();
+                counter.increase();
             }
         }
     }
@@ -140,15 +163,14 @@ int main() {
     deque<int> Queue[N];
     int sr_num;
     int queue_num;
-    int counter = 0;
-    CreateSerialNo(SerialStat);
+    Counter counter;
+    CreateSerialNo(SerialStat, counter);
     AssignRandomGate(SerialStat, Queue);
     Distribute(Queue);
     Stopwatch stat;
-    thread t(AutoDequeue, std::ref(Queue), std::ref(SerialStat), &counter );
+    thread t(AutoDequeue, std::ref(Queue), std::ref(SerialStat), std::ref(counter));
     t.detach();
     while(true){
-        counter += 1;
         while(true){
             cout << "Welcome to the Entry Queue Management System!" << endl << flush;
             cout << "Please enter your 7-digit serial number: " << flush;
@@ -158,7 +180,7 @@ int main() {
                 if ( sr_num >= 0 && sr_num < M ){
                     if ( SerialStat[sr_num].first == 0 ){
                         if ( HashFunction(sr_num) ){
-                            cout << "Welcome, VIP! You will be directed to our exclusive entry gate." << endl << flush;
+                            cout << "Welcome, VIP! You will be directed to our exclusive entry gate." << endl << endl << endl << flush;
                             SerialStat[sr_num].first = 2;
                         }
                         else{
@@ -174,6 +196,7 @@ int main() {
                             }
                             SerialStat[sr_num].second = queue_num - 1;
                             Queue[queue_num - 1].push_front(sr_num);
+                            //displayassigned(Queue);
                         }
                     }
                     else if ( SerialStat[sr_num].first == 1 ){
@@ -189,39 +212,32 @@ int main() {
                         Delete(Queue, SerialStat[sr_num].second, sr_num);
                         SerialStat[sr_num].second = queue_num - 1;
                         Queue[queue_num - 1].push_front(sr_num);
-                        cout << "Your queue has been updated. You are now in the queue for Gate " << queue_num << "." << endl << flush;
+                        cout << "Your queue has been updated. You are now in the queue for Gate " << queue_num << "." << endl << endl << endl << flush;
 
                     }
                     else{
-                        cout << "You have already entered the stadium. Re-entry is not permitted." << endl << endl << flush;
+                        cout << "You have already entered the stadium. Re-entry is not permitted." << endl << endl << endl << flush;
                     }
                     break;
                 }
                 else
                 {
-                    cout << "The serial number you entered is invalid. Please try again with a valid 7-digit serial number." << endl << endl << flush;
+                    cout << "The serial number you entered is invalid. Please try again with a valid 7-digit serial number." << endl << endl << endl << flush;
                     continue;
                 }
             }
             else{
                 cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "We couldn't understand your input. Please make sure to enter a 7-digit serial number." << endl << flush;
+                cout << "We couldn't understand your input. Please make sure to enter a 7-digit serial number." << endl << endl << endl << flush;
             }
         }
         
-        while ( ( counter < ( M / 2 - 1 ) + ( M % 2 ) ) || CountPeopleLeft(Queue) != 0 ){
-            cout << "Next, please!" << endl << endl << flush;
-            counter++;
+        if ( counter.isEmpty() ){
             break;
-        }
-        
-        if ( ( counter < ( M / 2 - 1 ) + ( M % 2 ) ) || CountPeopleLeft(Queue) != 0 ){
-            continue;
         }
         else
-            break;
+            continue;
     }
-    cout << "All attendees have been processed. Total processing time: " << stat.ElapsedMinutes() << " minutes." << endl << flush;
+    cout << "All spectators have been processed. Total processing time: " << stat.ElapsedMinutes() << " minutes." << endl << flush;
         return 0;
 }
