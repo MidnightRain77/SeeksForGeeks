@@ -13,9 +13,9 @@ TEAM ID: SeeksForGeeks
 ALGORITHM :
 
 1. Initialize constants:
-    a. Constant M as the capacity of the stadium
-    b. Constant N as the number of entry gates
-    c. Constant p as the minutes it takes for a single attendee to enter key
+    a. Constant M as the capacity of the stadium<br /> 
+    b. Constant N as the number of entry gates<br /> 
+    c. Constant p as the minutes it takes for a single attendee to enter key<br /> 
 
 2. Create a class Counter :
     a. A member variable 'Done' to keep the record of the total number of processed entries.
