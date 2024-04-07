@@ -164,18 +164,16 @@ Set a long variable min to the size of the first deque in Queue.<br />
 <h4>WHY DID WE CHOOSE THE SPECIFIC DATA STRUCTURE?<br /> <br /> </h4>
 
 
-<h5>An array of deque, in which each deque represents the queue at each gate, is used in this code to efficiently manage people waiting to enter the stadium. 
-Unlike arrays, deque allows dynamic allocation of memory which is very useful in this scenario as the people in the queue keep changing which requires more insertion and deletion operations. 
-It also allows insertion and deletion at both ends of the queue in constant time complexity O(1). 
-The random access of the deque allows us to efficiently implement the switching queue functionality of the program.
-Space complexity is O(n) where n is the total number of people in the waiting lines.
-An array of pair of size M stores two components: first stores a short integer type data which indicates the status of an individual either 
-0 - has not entered any queue, 
-1 - is already in a queue or 
-2 - has already entered the stadium. 
-The second of the pair is an integer type data which stores the queue number in which an individual is waiting as of now (if the first of the said individual is 1). This data structure is essentially added to decrease the time complexity to O(M) instead of O(MN), as there is direct access of the elements in the array of pair. 
-
-<br />
+<h5>An array of deque, in which each deque represents the queue at each gate, is used in this code to efficiently manage people waiting to enter the stadium. <br />
+Unlike arrays, deque allows dynamic allocation of memory which is very useful in this scenario as the people in the queue keep changing which requires more insertion and deletion operations. <br />
+It also allows insertion and deletion at both ends of the queue in constant time complexity O(1). <br />
+The random access of the deque allows us to efficiently implement the switching queue functionality of the program.<br />
+Space complexity is O(n) where n is the total number of people in the waiting lines.<br />
+An array of pair of size M stores two components: first stores a short integer type data which indicates the status of an individual either <br />
+0 - has not entered any queue, <br />
+1 - is already in a queue or <br />
+2 - has already entered the stadium. <br />
+The second of the pair is an integer type data which stores the queue number in which an individual is waiting as of now (if the first of the said individual is 1). This data structure is essentially added to decrease the time complexity to O(M) instead of O(MN), as there is direct access of the elements in the array of pair. <br />
 <br /> 
 <h4>CONTRIBUTION TABLE: <br /><br /> </h4>
 
