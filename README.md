@@ -7,12 +7,12 @@
 3. Yashasvi Jadav - 202301069<br /> 
 4. Kavya Parmar - 202301085<br /> 
 
-<h4>TEAM ID: SeeksForGeeks </h4><br />
+<h4>TEAM ID: SeeksForGeeks </h4>
 
-<h4>TIME COMPLEXITY: O(M)</h4><br />
-<h4>SPACE COMPLEXITY: O(M)</h4><br />
+<h4>TIME COMPLEXITY: O(M)</h4>
+<h4>SPACE COMPLEXITY: O(M)</h4>
 
-<h4>ALGORITHM :</h4><br /> 
+<h4>ALGORITHM :</h4>
 
 <h5>1. Initialize constants:<br />
     a. Constant M as the capacity of the stadium<br />
@@ -159,13 +159,13 @@
                 - If the condition is true, use continue to proceed to the next iteration of the loop.<br />
                 - If the condition is false, use break to exit the loop.<br />
         - Once the loop is exited, print "All attendees have been processed." along with the total processing time obtained from stat.ElapsedMinutes() to the console and flush the output.<br />
-    l. Return 0 to indicate successful completion of the program.<br />
+    l. Return 0 to indicate successful completion of the program.<br /><br />
 
 
 
 
 
-<h4>WHY DID WE CHOOSE THE SPECIFIC DATA STRUCTURE?<br /> <br /> </h4>
+<h4>WHY DID WE CHOOSE THE SPECIFIC DATA STRUCTURE?<br /> </h4>
 
 
 <h5>An array of deque, in which each deque represents the queue at each gate, is used in this code to efficiently manage people waiting to enter the stadium. <br />
@@ -179,22 +179,6 @@ An array of pair of size M stores two components: first stores a short integer t
 2 - has already entered the stadium. <br />
 The second of the pair is an integer type data which stores the queue number in which an individual is waiting as of now (if the first of the said individual is 1). This data structure is essentially added to decrease the time complexity to O(M) instead of O(MN), as there is direct access of the elements in the array of pair. <br />
 <br /> 
-<h4>CONTRIBUTION TABLE: <br /><br /> </h4>
-
-
-| FUNCTIONS          | Jiya Patel | Hiya Modi | Yashasvi Jadav | Kavya Parmar |
-| ---------          | ---------- | --------- | ---------      | --------     |
-| Main Function      | 20%        | 65%       | 10%            | 5%           |
-| CountPeopleLeft    | 100%       | 0%        | 0%             | 0%           |
-| Class Stopwatch    | 65%        | 5%        | 10%            | 20%          |
-| HashFunction       | 0%         | 0%        | 100%           | 0%           |
-| CreateSerialNo     | 0%         | 0%        | 0%             | 100%         |
-| AssignRandomGate   | 20%        | 10%       | 65%            | 5%           |
-| Distribute         | 20%        | 65%       | 10%            | 5%           |
-| Suggestion         | 10%        | 65%       | 20%            | 5%           |
-| Delete             | 20%        | 10%       | 65%            | 5%           |
-| AutoDequeue        | 65%        | 20%       | 10%            | 5%           |
-
 
 
 
